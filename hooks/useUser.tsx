@@ -105,3 +105,12 @@ export const MyUserContextProvider = (props: Props) => {
   // Providing the UserContext value to the children components.
   return <UserContext.Provider value={value} {...props} />;
 };
+
+export const useUser = () => {
+    const context= useContext(UserContext);
+    if(context === undefined){
+        throw new Error('useUser must be used within MyUserContextProvider ');
+    }
+
+    return context;
+}
