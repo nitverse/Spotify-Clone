@@ -30,7 +30,7 @@ const Modal: FC<ModalProps> = ({
                   rounded-md
                   bg-neutral-800
                   p-[25px]
-                  focus:outline-none
+  \
                   "
         >
           <Dialog.Title className="text-xl text-center font-bold mb-4">
@@ -55,7 +55,7 @@ const Modal: FC<ModalProps> = ({
                 items-center 
                 justify-center 
                 rounded-full 
-                focus:outline-none
+               
               "
               aria-label="Close"
             >
