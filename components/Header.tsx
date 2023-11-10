@@ -7,6 +7,12 @@ import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
 import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 import Button from "./Button";
+import useAuthModal from "@/hooks/useAuthModal";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useUser } from "@/hooks/useUser";
+import { FaUserAlt } from "react-icons/fa";
+import { toast } from "react-hot-toast";
+
 interface HeaderProps {
   children: React.ReactNode;
   className?: string;
@@ -14,8 +20,27 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({ children, className }) => {
   const router = useRouter();
+  const authModal = useAuthModal();
+  const supabaseClient = useSupabaseClient();
+  const { user } = useUser();
 
-  const handleLogout = () => {};
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabaseClient.auth.signOut();
+  
+      if (error) {
+        toast.error(error.message);
+      } else {
+        toast.success("Logged Out");
+        // Wait for the sign-out to complete before refreshing
+        await router.refresh();
+      }
+    } catch (error) {
+      console.error("Error during logout:", error);
+      // Handle other errors if needed
+    }
+  };
+
   return (
     <div
       className={twMerge(
@@ -99,32 +124,54 @@ const Header: FC<HeaderProps> = ({ children, className }) => {
           className="flex
         justify-between items-center gap-x-4"
         >
-          <>
-            <div>
-              <Button
-                onClick={() => {}}
-                className="
-                bg-transparent 
-                text-neutral-300
-                font-medium
-              "
+          {user ? (
+            <div className="flex gap-x-4 items-center">
+              <button
+                onClick={handleLogout}
+                className="bg-white px-6 py-2 w-full
+          rounded-full  border-transparent 
+            text-black disabled:cursor-not-allowed disabled:opacity-50
+            font-bold hover:opacity-75 transition"
               >
-                Sign Up
-              </Button>
-            </div>
-            <div>
-              <Button
-                onClick={() => {}}
-                className="
-                bg-white
-                px-6
-                py-2
-              "
+                Logout
+              </button>
+              <button
+                onClick={() => router.push("/account")}
+                className="bg-white w-full px-4 py-4
+                rounded-full border-transparent 
+                  text-black disabled:cursor-not-allowed disabled:opacity-50
+                  font-bold hover:opacity-75 transition"
               >
-                Log In
-              </Button>
+                <FaUserAlt />
+              </button>
             </div>
-          </>
+          ) : (
+            <>
+              <div>
+                <button
+                  onClick={authModal.onOpen}
+                  className="
+                    bg-transparent 
+                    text-neutral-300 
+                    font-medium
+                  "
+                >
+                  Sign up
+                </button>
+              </div>
+              <div>
+                <button
+                  onClick={authModal.onOpen}
+                  className="bg-white px-6 py-2 w-full
+                  rounded-full bg-green-500 border-transparent px-3 py-3
+                    text-black disabled:cursor-not-allowed disabled:opacity-50
+                    font-bold hover:opacity-75 transition"
+                >
+                  Log in
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
       {children}
