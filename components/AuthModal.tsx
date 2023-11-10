@@ -19,13 +19,29 @@ interface AuthModalProps {}
 const AuthModal: FC<AuthModalProps> = ({}) => {
   const supabaseClient = useSupabaseClient();
   const router = useRouter();
+
   const { session } = useSessionContext();
+  const { onClose, isOpen } = useAuthModal();
+
+  useEffect(() => {
+    if (session) {
+      router.refresh();
+      onClose();
+    }
+  }, [session, router, onClose]);
+
+  const onChange = (open: boolean) => {
+    if (!open) {
+      onClose();
+    }
+  }
+
   return (
     <Modal
       title="Welcome Back"
-      description="Test Desc"
-      isOpen
-      onChange={() => {}}
+      description="Login to your Account."
+      isOpen = {isOpen}
+      onChange = {onChange}
     >
       <Auth
         supabaseClient={supabaseClient}
