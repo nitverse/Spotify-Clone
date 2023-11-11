@@ -51,7 +51,7 @@ const UploadModal = () => {
       }
 
       const uniqueID = uniqid();
-      console.log("first pass");
+      // console.log("first pass");
       
 
       // Upload song
@@ -134,7 +134,7 @@ const UploadModal = () => {
           placeholder="Song author"
         />
         <div>
-          <div className="pb-1">Select a song file</div>
+          <div className="pb-1 ">Select a song file</div>
           <Input
             placeholder="test"
             disabled={isLoading}

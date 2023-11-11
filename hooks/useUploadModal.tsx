@@ -7,7 +7,7 @@ interface UploadModalStore {
 }
 
 const useUploadModal = create<UploadModalStore>((set) => ({
-  isOpen:true,
+  isOpen:false,
   onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),
 }));
