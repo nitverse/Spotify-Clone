@@ -7,6 +7,17 @@ export const revalidate = 0;
 export default async function Home() {
   const songs = await getSongs();
 
+  const getDynamicGreeting = () => {
+    const currentHour = new Date().getHours();
+    if (currentHour >= 5 && currentHour < 12) {
+      return "Good Morning!";
+    } else if (currentHour >= 12 && currentHour < 12) {
+      return "Good Afternoon!";
+    } else {
+      return "Good Evening!";
+    }
+  };
+
   return (
     <>
       <div
@@ -28,11 +39,11 @@ export default async function Home() {
             <h1
               className="
                 text-white
-                text-3xl
-                font-semibold
+                text-5xl
+                font-bold
               "
             >
-              Welcome Back !
+              {getDynamicGreeting()}
             </h1>
             <div
               className="grid grid-cols-1 sm:grid-cols-2
