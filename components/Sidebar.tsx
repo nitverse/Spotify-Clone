@@ -15,7 +15,7 @@ interface SidebarProps {
   songs: Song[];
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ children  , songs}) => {
+const Sidebar: React.FC<SidebarProps> = ({ children, songs }) => {
   const pathname = usePathname();
   const routes = useMemo(
     () => [
@@ -35,15 +35,15 @@ const Sidebar: React.FC<SidebarProps> = ({ children  , songs}) => {
     [pathname]
   );
   return (
-    <div 
-    className={twMerge(`
+    <div
+      className={twMerge(`
       flex 
       h-full
       `
-    )}
-  >
-    <div 
-      className="
+      )}
+    >
+      <div
+        className="
         hidden 
         md:flex 
         flex-col 
@@ -53,22 +53,22 @@ const Sidebar: React.FC<SidebarProps> = ({ children  , songs}) => {
         w-[300px] 
         p-2
       "
-    >
-      <Box>
-        <div className="flex flex-col gap-y-4 px-5 py-4">
-          {routes.map((item) => (
-            <SidebarItem key={item.label} {...item} />
-          ))}
-        </div>
-      </Box>
-      <Box className="overflow-y-auto h-full">
-        <Library songs={songs}/>
-      </Box>
+      >
+        <Box>
+          <div className="flex flex-col gap-y-4 px-5 py-4">
+            {routes.map((item) => (
+              <SidebarItem key={item.label} {...item} />
+            ))}
+          </div>
+        </Box>
+        <Box className="overflow-y-auto h-full">
+          <Library songs={songs} />
+        </Box>
+      </div>
+      <main className="h-full flex-1 overflow-y-auto py-2">
+        {children}
+      </main>
     </div>
-    <main className="h-full flex-1 overflow-y-auto py-2">
-      {children}
-    </main>
-  </div>
   );
 };
 
