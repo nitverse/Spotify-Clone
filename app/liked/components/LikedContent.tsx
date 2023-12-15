@@ -2,6 +2,7 @@
 
 import LikeButton from '@/components/LikeButton'
 import MediaItem from '@/components/MediaItem'
+import useOnPlay from '@/hooks/useOnPlay'
 import { useUser } from '@/hooks/useUser'
 import { Song } from '@/types'
 import { useRouter } from 'next/navigation'
@@ -14,6 +15,7 @@ interface LikedContentProps {
 const LikedContent: FC<LikedContentProps> = ({songs}) => {
 
     const router = useRouter();
+    const onPlay = useOnPlay(songs);
     const {isLoading , user} = useUser();
 
     // const onPlay = useOnPlay(songs);
@@ -46,7 +48,7 @@ const LikedContent: FC<LikedContentProps> = ({songs}) => {
             >
                 <div className='flex-1'>
                     {/* media item */}
-                    <MediaItem onClick={()=>{}} data = {song} />
+                    <MediaItem onClick={(id:string)=> onPlay(id)} data = {song} />
                 </div>
                 <LikeButton songId={song.id} />
             </div>
