@@ -8,14 +8,17 @@ export default async function Home() {
   const songs = await getSongs();
 
   const getDynamicGreeting = () => {
-    const currentHour = new Date().getHours();
-    console.log(currentHour);
-    
+    const currentHourString = new Date().toLocaleTimeString("en-US", {
+      hour: "numeric",
+      hour12: false,
+    });
+    const currentHour = parseInt(currentHourString, 10);
+
     if (currentHour >= 5 && currentHour < 12) {
       return "Good Morning!";
-    } else if (currentHour >= 12 && currentHour<=17 ) {
+    } else if (currentHour >= 12 && currentHour < 17) {
       return "Good Afternoon!";
-    } else {
+    } else if (currentHour >= 17 && currentHour <= 23) {
       return "Good Evening!";
     }
   };
