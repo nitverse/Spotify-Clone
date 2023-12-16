@@ -126,7 +126,7 @@ const PlayerContent: FC<PlayerContentProps> = ({ song, songUrl }) => {
           <Icon size={30} className="text-black mx-2" />
         </div>
         <AiFillStepForward
-          onclick={onPlayNext}
+          onClick={onPlayNext}
           size={30}
           className="text-neutral-400 cursor-pointer hover:text-white transition"
         />
