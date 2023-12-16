@@ -9,6 +9,8 @@ export default async function Home() {
 
   const getDynamicGreeting = () => {
     const currentHour = new Date().getHours();
+    console.log(currentHour);
+    
     if (currentHour >= 5 && currentHour < 12) {
       return "Good Morning!";
     } else if (currentHour >= 12 && currentHour<=17 ) {
