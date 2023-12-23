@@ -131,7 +131,7 @@ const Header: React.FC<HeaderProps> = ({
                 onClick={() => router.push('/account')} 
                 className="bg-white border-transparent px-3 py-3
                 text-black disabled:cursor-not-allowed disabled:opacity-50
-                font-bold hover:opacity-75 transition"
+                font-bold hover:opacity-75 transition rounded-full"
               >
                 <FaUserAlt />
               </button>
