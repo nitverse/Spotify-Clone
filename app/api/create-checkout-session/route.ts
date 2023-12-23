@@ -6,23 +6,25 @@ import { stripe } from '@/libs/stripe';
 import { getURL } from '@/libs/helpers';
 import { createOrRetrieveCustomer } from '@/libs/supabaseAdmin';
 
-export async function POST(request: Request) {
+export async function POST(
+  request: Request
+) {
   const { price, quantity = 1, metadata = {} } = await request.json();
 
   try {
-    const supabase = createRouteHandlerClient({ cookies });
-    const { data: { user } } = await supabase.auth.getUser();
-
-    if (!user) {
-      return NextResponse.json({ error: 'User not authenticated' }, { status: 401 });
-    }
+    const supabase = createRouteHandlerClient({ 
+      cookies
+    });
+    const {
+      data: { user }
+    } = await supabase.auth.getUser();
 
     const customer = await createOrRetrieveCustomer({
-      uuid: user.id || '',
-      email: user.email || ''
+      uuid: user?.id || '',
+      email: user?.email || ''
     });
 
-    const session = await stripe.checkout.sessions.create({
+    const session = await (stripe as any).checkout.sessions.create({
       payment_method_types: ['card'],
       billing_address_collection: 'required',
       customer,
@@ -43,8 +45,8 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ sessionId: session.id });
-  } catch (err) {
-    console.error(err);
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: any) {
+    console.log(err);
+    return new NextResponse('Internal Error', { status: 500 });
   }
 }
