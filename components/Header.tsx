@@ -127,12 +127,14 @@ const Header: React.FC<HeaderProps> = ({
               >
                 Logout
               </Button>
-              <Button 
+              <button 
                 onClick={() => router.push('/account')} 
-                className="bg-white"
+                className="bg-white border-transparent px-3 py-3
+                text-black disabled:cursor-not-allowed disabled:opacity-50
+                font-bold hover:opacity-75 transition"
               >
                 <FaUserAlt />
-              </Button>
+              </button>
             </div>
           ) : (
             <>
